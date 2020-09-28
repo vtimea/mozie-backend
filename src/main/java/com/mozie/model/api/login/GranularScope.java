@@ -1,4 +1,4 @@
-package com.mozie.model.login;
+package com.mozie.model.api.login;
 
 import java.util.HashMap;
 import java.util.List;

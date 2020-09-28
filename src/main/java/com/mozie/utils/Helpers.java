@@ -1,7 +1,7 @@
 package com.mozie.utils;
 
-import com.mozie.model.login.FbToken;
-import com.mozie.model.login.FbTokenData;
+import com.mozie.model.api.login.FbToken;
+import com.mozie.model.api.login.FbTokenData;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

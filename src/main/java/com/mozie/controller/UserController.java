@@ -1,8 +1,8 @@
 package com.mozie.controller;
 
-import com.mozie.model.User;
-import com.mozie.model.login.LoginParameters;
-import com.mozie.model.login.LoginResponse;
+import com.mozie.model.api.login.LoginParameters;
+import com.mozie.model.api.login.LoginResponse;
+import com.mozie.model.database.User;
 import com.mozie.repository.UserRepository;
 import com.mozie.utils.AuthToken;
 import com.mozie.utils.Helpers;

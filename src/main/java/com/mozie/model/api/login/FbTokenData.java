@@ -1,4 +1,4 @@
-package com.mozie.model.login;
+package com.mozie.model.api.login;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

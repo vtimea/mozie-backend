@@ -1,4 +1,4 @@
-package com.mozie.model;
+package com.mozie.model.database;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;

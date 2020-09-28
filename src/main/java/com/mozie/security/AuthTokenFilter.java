@@ -1,6 +1,6 @@
 package com.mozie.security;
 
-import com.mozie.model.User;
+import com.mozie.model.database.User;
 import com.mozie.repository.UserRepository;
 import com.mozie.utils.AuthToken;
 import org.springframework.web.context.WebApplicationContext;
