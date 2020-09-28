@@ -1,7 +1,8 @@
 package com.mozie.model;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,20 +14,20 @@ import javax.persistence.Table;
 public class User {
     @Id
     @Column(name = "userId")
+    @NonNull
     private String userId;
 
     @Column(name = "token")
     private String token;
 
     @Column(name = "expires")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime expires;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime expires;
 
     public User() {
-        this.userId = null;
     }
 
-    public User(String userId, String token, DateTime expires) {
+    public User(String userId, String token, LocalDateTime expires) {
         this.userId = userId;
         this.token = token;
         this.expires = expires;
@@ -48,11 +49,11 @@ public class User {
         this.token = token;
     }
 
-    public DateTime getExpires() {
+    public LocalDateTime getExpires() {
         return expires;
     }
 
-    public void setExpires(DateTime expires) {
+    public void setExpires(LocalDateTime expires) {
         this.expires = expires;
     }
 }

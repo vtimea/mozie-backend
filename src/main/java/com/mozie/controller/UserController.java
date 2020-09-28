@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class UserController {
-    private static final Long TOKEN_VALIDITY = (1000L * 60 * 60);
+    private static final int TOKEN_VALIDITY = (1000 * 60 * 60);
 
     @Autowired
     UserRepository userRepository;

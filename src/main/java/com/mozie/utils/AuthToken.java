@@ -6,23 +6,24 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import static com.mozie.utils.ApiKeys.JwtSigningKey;
 
 public class AuthToken {
     private final String jwt;
-    private final DateTime createdAt;
-    private final DateTime expiresAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime expiresAt;
 
-    private AuthToken(String jwt, DateTime createdAt, DateTime expiresAt) {
+    private AuthToken(String jwt, LocalDateTime createdAt, LocalDateTime expiresAt) {
         this.jwt = jwt;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
     }
 
-    public static AuthToken generateToken(String userId, Long validity) {
-        DateTime created = DateTime.now();
-        DateTime expires = new DateTime(created.getMillis() + (validity));
+    public static AuthToken generateToken(String userId, int validity) {
+        LocalDateTime created = LocalDateTime.now();
+        LocalDateTime expires = new LocalDateTime(created.plusMillis(validity));
         String jwt = Jwts.builder().setIssuer("Mozie web service")
                 .setSubject(userId)
                 .setExpiration(expires.toDate())
@@ -32,14 +33,23 @@ public class AuthToken {
     }
 
     public static boolean isValid(String jwtToken) {
+        try {
+            Jwts.parserBuilder().setSigningKey(JwtSigningKey).build().parseClaimsJws(jwtToken);
+        } catch (JwtException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isExpired(String jwtToken) {
         Jws<Claims> claims;
         try {
             claims = Jwts.parserBuilder().setSigningKey(JwtSigningKey).build().parseClaimsJws(jwtToken);
         } catch (JwtException e) {
-            return false;
+            return true;
         }
         DateTime exp = new DateTime(claims.getBody().getExpiration());
-        return exp.isAfterNow();
+        return exp.isBeforeNow();
     }
 
     public static String getUserId(String jwt) {
@@ -59,11 +69,11 @@ public class AuthToken {
         return jwt;
     }
 
-    public DateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public DateTime getExpiresAt() {
+    public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
 }
