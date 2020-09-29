@@ -1,10 +1,11 @@
 package com.mozie.model.database;
 
+
 import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity(name = "screenings")
 public class Screening {
@@ -12,7 +13,7 @@ public class Screening {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NonNull
-    private String id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
@@ -20,7 +21,7 @@ public class Screening {
 
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
-    private Movie cinema;
+    private Cinema cinema;
 
     @Column(name = "startDate")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
@@ -32,12 +33,11 @@ public class Screening {
     @Column(name = "voice")
     private String voice;
 
-    @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,11 +49,11 @@ public class Screening {
         this.movie = movie;
     }
 
-    public Movie getCinema() {
+    public Cinema getCinema() {
         return cinema;
     }
 
-    public void setCinema(Movie cinema) {
+    public void setCinema(Cinema cinema) {
         this.cinema = cinema;
     }
 
