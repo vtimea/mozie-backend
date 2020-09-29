@@ -1,20 +1,19 @@
 package com.mozie.model.database;
 
-import org.hibernate.annotations.Type;
 import org.springframework.lang.NonNull;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "movies")
 public class Movie {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @NonNull
-    private String id;
+    private String id;  // CC id
 
     @Column(name = "title")
     private String title;
@@ -25,22 +24,14 @@ public class Movie {
     @Column(name = "length")
     private int length;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 2000)
     private String description;
 
-    @Column(name = "actors")
+    @Column(name = "actors", length = 2000)
     private String actors;
 
-    @Column(name = "startDate")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    private LocalDateTime startDate;
-
-    @Column(name = "endDate")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    private LocalDateTime endDate;
-
-    @OneToMany(mappedBy = "movie")
-    private Set<Screening> screenings;
+    @Column(name = "posterUrl")
+    private String posterUrl;
 
     @NonNull
     public String getId() {
@@ -91,27 +82,11 @@ public class Movie {
         this.actors = actors;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public Set<Screening> getScreenings() {
-        return screenings;
-    }
-
-    public void setScreenings(Set<Screening> screenings) {
-        this.screenings = screenings;
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 }
