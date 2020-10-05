@@ -28,7 +28,7 @@ public class UserController {
             }
             AuthToken authToken = AuthToken.generateToken(loginParameters.getUserId(), TOKEN_VALIDITY);
             userRepository.save(new User(loginParameters.getUserId(), authToken.getJwt(), authToken.getExpiresAt()));
-            LoginResponse loginResponse = new LoginResponse(authToken.getJwt());
+            LoginResponse loginResponse = new LoginResponse(authToken.getJwt(), authToken.getExpiresAt());
             return new ResponseEntity<>(loginResponse, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
