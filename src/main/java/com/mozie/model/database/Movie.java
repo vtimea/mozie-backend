@@ -30,8 +30,12 @@ public class Movie {
     @Column(name = "actors", length = 2000)
     private String actors;
 
-    @Column(name = "posterUrl")
+    @Column(name = "poster_url")
     private String posterUrl;
+
+    @NonNull
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @NonNull
     public String getId() {
@@ -88,5 +92,13 @@ public class Movie {
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
