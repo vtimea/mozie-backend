@@ -27,4 +27,9 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getNowPlayingMovies() {
         return movieRespository.findMoviesByIsActiveTrue();
     }
+
+    @Override
+    public Movie getMovieById(String id) {
+        return movieRespository.findMovieById(id);
+    }
 }

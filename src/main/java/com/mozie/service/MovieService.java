@@ -10,4 +10,6 @@ public interface MovieService {
     List<Movie> getSoonMovies();
 
     List<Movie> getNowPlayingMovies();
+
+    Movie getMovieById(String id);
 }

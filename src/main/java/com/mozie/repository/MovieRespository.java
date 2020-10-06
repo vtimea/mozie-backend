@@ -9,4 +9,6 @@ public interface MovieRespository extends JpaRepository<Movie, String> {
     List<Movie> findMoviesByIsActiveTrue();
 
     List<Movie> findMoviesByIsActiveFalse();
+
+    Movie findMovieById(String id);
 }
