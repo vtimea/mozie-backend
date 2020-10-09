@@ -4,6 +4,8 @@ import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;
 import com.mozie.repository.CinemaRepository;
 import com.mozie.repository.ScreeningsRepository;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,12 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public List<Screening> getScreeningsByCinema(String id) {
         return screeningsRepository.findScreeningsByCinema_Id(id);
+    }
+
+    @Override
+    public List<Screening> getScreeningsByCinemaAndDate(String id, DateTime date) {
+        LocalDateTime startDate = date.withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toLocalDateTime();
+        LocalDateTime endDate = date.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toLocalDateTime();
+        return screeningsRepository.findScreeningsByCinema_IdAndStartTimeBetween(id, startDate, endDate);
     }
 }

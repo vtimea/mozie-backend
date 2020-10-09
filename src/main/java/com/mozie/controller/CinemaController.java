@@ -1,17 +1,16 @@
 package com.mozie.controller;
 
+import com.mozie.model.api.ScreeningRequest;
 import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;
 import com.mozie.model.dto.ScreeningDto;
 import com.mozie.service.CinemaService;
+import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
@@ -34,8 +33,14 @@ public class CinemaController {
     }
 
     @GetMapping("/screenings")
-    public ResponseEntity<List<ScreeningDto>> getScreenings(@PathParam(value = "cinema") String cinema) {
-        List<Screening> screenings = cinemaService.getScreeningsByCinema(cinema);
+    public ResponseEntity<List<ScreeningDto>> getScreenings(@PathParam(value = "cinema") String cinema, @RequestBody(required = false) ScreeningRequest bodyParams) {
+        List<Screening> screenings;
+        if (bodyParams != null) {
+            DateTime date = new DateTime(bodyParams.getDate());
+            screenings = cinemaService.getScreeningsByCinemaAndDate(cinema, date);
+        } else {
+            screenings = cinemaService.getScreeningsByCinema(cinema);
+        }
         List<ScreeningDto> screeningDtos = convertToScreeningDtoList(screenings);
         return new ResponseEntity<>(screeningDtos, HttpStatus.OK);
     }
