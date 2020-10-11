@@ -1,6 +1,5 @@
 package com.mozie.controller;
 
-import com.mozie.model.api.ScreeningRequest;
 import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;
 import com.mozie.model.dto.ScreeningDto;
@@ -10,7 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
@@ -33,11 +35,12 @@ public class CinemaController {
     }
 
     @GetMapping("/screenings")
-    public ResponseEntity<List<ScreeningDto>> getScreenings(@PathParam(value = "cinema") String cinema, @RequestBody(required = false) ScreeningRequest bodyParams) {
+    public ResponseEntity<List<ScreeningDto>> getScreenings(@PathParam(value = "cinema") String cinema, @PathParam(value = "date") String date) {
         List<Screening> screenings;
-        if (bodyParams != null) {
-            DateTime date = new DateTime(bodyParams.getDate());
-            screenings = cinemaService.getScreeningsByCinemaAndDate(cinema, date);
+        //todo error checking
+        if (date != null) {
+            DateTime dateTime = new DateTime(date);
+            screenings = cinemaService.getScreeningsByCinemaAndDate(cinema, dateTime);
         } else {
             screenings = cinemaService.getScreeningsByCinema(cinema);
         }
