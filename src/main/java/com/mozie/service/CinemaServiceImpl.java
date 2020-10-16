@@ -31,8 +31,15 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public List<Screening> getScreeningsByCinemaAndDate(String id, DateTime date) {
-        LocalDateTime startDate = date.toLocalDateTime().plusMillis(30);
-        LocalDateTime endDate = date.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toLocalDateTime();
+        DateTime today = DateTime.now();
+        LocalDateTime startDate;
+        LocalDateTime endDate;
+        if (date.getYear() == today.getYear() && date.getMonthOfYear() == today.getMonthOfYear() && date.getDayOfMonth() == today.getDayOfMonth()) {
+            startDate = date.toLocalDateTime().plusMinutes(30);
+        } else {
+            startDate = date.toLocalDateTime().withMillisOfDay(0);
+        }
+        endDate = date.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toLocalDateTime();
         return screeningsRepository.findScreeningsByCinema_IdAndStartTimeBetween(id, startDate, endDate);
     }
 }
