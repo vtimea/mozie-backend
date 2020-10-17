@@ -42,4 +42,9 @@ public class CinemaServiceImpl implements CinemaService {
         endDate = date.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toLocalDateTime();
         return screeningsRepository.findScreeningsByCinema_IdAndStartTimeBetween(id, startDate, endDate);
     }
+
+    @Override
+    public List<Screening> getScreeningsByMovie(String movieId) {
+        return screeningsRepository.findScreeningsByMovie_Id(movieId);
+    }
 }

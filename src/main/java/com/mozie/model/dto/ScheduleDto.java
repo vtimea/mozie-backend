@@ -1,6 +1,6 @@
 package com.mozie.model.dto;
 
-public class ScreeningDto {
+public class ScheduleDto {
     private String id;
     private String startTime;
     private String type;
@@ -11,6 +11,9 @@ public class ScreeningDto {
 
     private String movie_id;
     private String movie_title;
+    private String movie_genre;
+    private int movie_length;
+    private String movie_poster;
 
     public String getId() {
         return id;
@@ -74,5 +77,29 @@ public class ScreeningDto {
 
     public void setMovie_title(String movie_title) {
         this.movie_title = movie_title;
+    }
+
+    public String getMovie_genre() {
+        return movie_genre;
+    }
+
+    public void setMovie_genre(String movie_genre) {
+        this.movie_genre = movie_genre;
+    }
+
+    public int getMovie_length() {
+        return movie_length;
+    }
+
+    public void setMovie_length(int movie_length) {
+        this.movie_length = movie_length;
+    }
+
+    public String getMovie_poster() {
+        return movie_poster;
+    }
+
+    public void setMovie_poster(String movie_poster) {
+        this.movie_poster = movie_poster;
     }
 }

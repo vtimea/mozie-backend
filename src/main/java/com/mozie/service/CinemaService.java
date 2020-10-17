@@ -12,4 +12,6 @@ public interface CinemaService {
     List<Screening> getScreeningsByCinema(String id);
 
     List<Screening> getScreeningsByCinemaAndDate(String id, DateTime date);
+
+    List<Screening> getScreeningsByMovie(String movieId);
 }

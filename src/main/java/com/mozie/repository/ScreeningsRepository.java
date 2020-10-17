@@ -10,4 +10,6 @@ public interface ScreeningsRepository extends JpaRepository<Screening, Integer> 
     List<Screening> findScreeningsByCinema_Id(String id);
 
     List<Screening> findScreeningsByCinema_IdAndStartTimeBetween(String cinema_id, LocalDateTime startTime, LocalDateTime startTime2);
+
+    List<Screening> findScreeningsByMovie_Id(String movie_id);
 }
