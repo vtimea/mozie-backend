@@ -13,6 +13,11 @@ public class TicketServiceImpl implements TicketService {
     TicketsRepository ticketsRepository;
 
     @Override
+    public List<Ticket> getAll() {
+        return ticketsRepository.findAll();
+    }
+
+    @Override
     public List<Ticket> getByType(String type) {
         return ticketsRepository.getAllByType(type);
     }

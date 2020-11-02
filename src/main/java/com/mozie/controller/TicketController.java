@@ -26,7 +26,9 @@ public class TicketController {
     @GetMapping("")
     public ResponseEntity<List<TicketDto>> getTicketsByPrice(@PathParam(value = "type") String type) {
         List<Ticket> tickets;
-        if (type.toLowerCase().contains("2d")) {
+        if (type == null || type.isEmpty()) {
+            tickets = ticketService.getAll();
+        } else if (type.toLowerCase().contains("2d")) {
             tickets = ticketService.getByType("2d");
         } else if (type.toLowerCase().contains("3d")) {
             tickets = ticketService.getByType("3d");
