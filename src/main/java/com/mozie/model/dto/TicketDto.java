@@ -4,6 +4,7 @@ public class TicketDto {
     private int id;
     private String name;
     private int price;
+    private String type;
 
     public int getId() {
         return id;
@@ -27,5 +28,13 @@ public class TicketDto {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
