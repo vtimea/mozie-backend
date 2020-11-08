@@ -2,8 +2,10 @@ package com.mozie.service;
 
 import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;
+import com.mozie.model.database.Seat;
 import com.mozie.repository.CinemaRepository;
 import com.mozie.repository.ScreeningsRepository;
+import com.mozie.repository.SeatsRepository;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Autowired
     ScreeningsRepository screeningsRepository;
+
+    @Autowired
+    SeatsRepository seatsRepository;
 
     @Override
     public List<Cinema> getAllCinemas() {
@@ -47,5 +52,10 @@ public class CinemaServiceImpl implements CinemaService {
     public List<Screening> getScreeningsByMovie(String movieId) {
         LocalDateTime startDate = DateTime.now().toLocalDateTime().plusMinutes(30);
         return screeningsRepository.findScreeningsByMovie_IdAndStartTimeAfter(movieId, startDate);
+    }
+
+    @Override
+    public List<Seat> getSeatsByScreening(int id) {
+        return seatsRepository.findSeatsByScreening_Id(id);
     }
 }

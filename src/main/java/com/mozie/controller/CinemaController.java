@@ -2,8 +2,11 @@ package com.mozie.controller;
 
 import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;
+import com.mozie.model.database.Seat;
 import com.mozie.model.dto.ScheduleDto;
 import com.mozie.model.dto.ScreeningDto;
+import com.mozie.model.dto.ScreeningRoomDto;
+import com.mozie.model.dto.utils.DtoConverters;
 import com.mozie.service.CinemaService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +56,12 @@ public class CinemaController {
         List<Screening> screenings = cinemaService.getScreeningsByMovie(movieId);
         List<ScreeningDto> screeningDtos = convertToScreeningDto(screenings);
         return new ResponseEntity<>(screeningDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/screenings/room")
+    public ResponseEntity<ScreeningRoomDto> getSeatsByScreening(@PathParam(value = "screeningId") int screeningId) {
+        List<Seat> seats = cinemaService.getSeatsByScreening(screeningId);
+        ScreeningRoomDto screeningRoomDto = DtoConverters.convertToScreeningRoomDto(seats);
+        return new ResponseEntity<>(screeningRoomDto, HttpStatus.OK);
     }
 }

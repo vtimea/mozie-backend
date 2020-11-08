@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.mozie.model.database.Movie;
 import com.mozie.model.database.Screening;
+import com.mozie.model.database.Seat;
 import com.mozie.model.database.Ticket;
 import com.mozie.model.dto.*;
 import org.modelmapper.ModelMapper;
@@ -92,5 +93,26 @@ public class DtoConverters {
             ticketDtos.add(convertToTicketDto(ticket));
         }
         return ticketDtos;
+    }
+
+    public static ScreeningRoomDto convertToScreeningRoomDto(List<Seat> seats) {
+        ModelMapper modelMapper = new ModelMapper();
+        ScreeningRoomDto screeningRoomDto = new ScreeningRoomDto();
+        List<SeatDto> dtoSeatList = new ArrayList<>();
+        int maxCol = 0, maxRow = 0;
+        for (Seat seat : seats) {
+            if (seat.getCol() > maxCol) {
+                maxCol = seat.getCol();
+            }
+            if (seat.getRow() > maxRow) {
+                maxRow = seat.getRow();
+            }
+            SeatDto dto = modelMapper.map(seat, SeatDto.class);
+            dtoSeatList.add(dto);
+        }
+        screeningRoomDto.setNumCols(maxCol);
+        screeningRoomDto.setNumRows(maxRow);
+        screeningRoomDto.setSeats(dtoSeatList);
+        return screeningRoomDto;
     }
 }
