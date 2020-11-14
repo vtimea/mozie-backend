@@ -10,6 +10,7 @@ public class MovieDetailDto {
     private String description;
     private String posterUrl;
     private List<ActorDto> actorsList;
+    private boolean isActive;
 
     public String getId() {
         return id;
@@ -65,5 +66,13 @@ public class MovieDetailDto {
 
     public void setActors(List<ActorDto> actors) {
         this.actorsList = actors;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
