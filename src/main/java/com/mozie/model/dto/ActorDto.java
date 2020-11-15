@@ -12,11 +12,11 @@ public class ActorDto {
         this.name = name;
     }
 
-    public String getPictueUrl() {
+    public String getPictureUrl() {
         return profilePath;
     }
 
-    public void setPictueUrl(String profilePath) {
+    public void setPictureUrl(String profilePath) {
         this.profilePath = profilePath;
     }
 }
