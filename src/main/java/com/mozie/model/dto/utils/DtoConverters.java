@@ -5,7 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import com.mozie.model.database.Movie;
 import com.mozie.model.database.Screening;
 import com.mozie.model.database.Seat;
-import com.mozie.model.database.Ticket;
+import com.mozie.model.database.TicketType;
 import com.mozie.model.dto.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -82,15 +82,15 @@ public class DtoConverters {
         return movieDtos;
     }
 
-    public static TicketDto convertToTicketDto(Ticket ticket) {
+    public static TicketDto convertToTicketDto(TicketType ticketType) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(ticket, TicketDto.class);
+        return modelMapper.map(ticketType, TicketDto.class);
     }
 
-    public static List<TicketDto> convertToTicketDtoList(List<Ticket> tickets) {
+    public static List<TicketDto> convertToTicketDtoList(List<TicketType> ticketTypes) {
         List<TicketDto> ticketDtos = new ArrayList<>();
-        for (Ticket ticket : tickets) {
-            ticketDtos.add(convertToTicketDto(ticket));
+        for (TicketType ticketType : ticketTypes) {
+            ticketDtos.add(convertToTicketDto(ticketType));
         }
         return ticketDtos;
     }

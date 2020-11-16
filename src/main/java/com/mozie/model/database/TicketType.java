@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ticket_types")
-public class Ticket {
+public class TicketType {
     @Id
     @Column(name = "id")
     @NonNull
@@ -24,7 +24,7 @@ public class Ticket {
     @Column(name = "type")
     private String type;
 
-    public Ticket() {
+    public TicketType() {
     }
 
     @NonNull

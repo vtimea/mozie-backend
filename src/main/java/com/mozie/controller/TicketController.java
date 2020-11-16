@@ -1,9 +1,10 @@
 package com.mozie.controller;
 
-import com.mozie.model.api.tickets.ClientTokenResponse;
+import com.mozie.model.api.tickets.PaymentResult;
+import com.mozie.model.api.tickets.ResponseClientToken;
 import com.mozie.model.api.tickets.TicketOrder;
-import com.mozie.model.database.Ticket;
-import com.mozie.model.database.Transaction;
+import com.mozie.model.database.DbTransaction;
+import com.mozie.model.database.TicketType;
 import com.mozie.model.dto.TicketDto;
 import com.mozie.model.dto.utils.DtoConverters;
 import com.mozie.service.ticket.TicketService;
@@ -24,23 +25,30 @@ public class TicketController {
 
     @GetMapping("")
     public ResponseEntity<List<TicketDto>> getTicketsByPrice(@PathParam(value = "type") String type) {
-        List<Ticket> tickets;
+        List<TicketType> ticketTypes;
         if (type == null || type.isEmpty()) {
-            tickets = ticketService.getAllTicketTypes();
+            ticketTypes = ticketService.getAllTicketTypes();
         } else {
-            tickets = ticketService.getTicketTypeByType(type);
+            ticketTypes = ticketService.getTicketTypeByType(type);
         }
-        List<TicketDto> ticketDtos = DtoConverters.convertToTicketDtoList(tickets);
+        List<TicketDto> ticketDtos = DtoConverters.convertToTicketDtoList(ticketTypes);
         return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
     }
 
     @PostMapping("payments/ticket")
-    public ResponseEntity<ClientTokenResponse> generateClientToken(@RequestBody TicketOrder ticketOrder) {
-        Transaction transaction = ticketService.createTransaction(ticketOrder);
-        ticketService.saveTransaction(transaction);
+    public ResponseEntity<ResponseClientToken> generateClientToken(@RequestBody TicketOrder ticketOrder) {
+        DbTransaction dbTransaction = ticketService.createTransaction(ticketOrder);
         String clientToken = ticketService.createClientToken();
-        ClientTokenResponse response = new ClientTokenResponse();
+        ResponseClientToken response = new ResponseClientToken();
+        response.setTransactionId(dbTransaction.getId());
         response.setClientToken(clientToken);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("payments/ticket/nonce")
+    public ResponseEntity<Boolean> receivePaymentNonce(@RequestBody PaymentResult paymentResult) {
+        boolean isSuccessful = ticketService.doTransaction(paymentResult.getNonce(), paymentResult.getTransactionId());
+        //todo
+        return new ResponseEntity<>(isSuccessful, HttpStatus.OK);
     }
 }

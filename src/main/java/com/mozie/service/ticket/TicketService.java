@@ -1,21 +1,21 @@
 package com.mozie.service.ticket;
 
 import com.mozie.model.api.tickets.TicketOrder;
-import com.mozie.model.database.Ticket;
-import com.mozie.model.database.Transaction;
+import com.mozie.model.database.DbTransaction;
+import com.mozie.model.database.TicketType;
 
 import java.util.List;
 
 public interface TicketService {
-    List<Ticket> getAllTicketTypes();
+    List<TicketType> getAllTicketTypes();
 
-    List<Ticket> getTicketTypeByType(String type);
+    List<TicketType> getTicketTypeByType(String type);
 
-    Ticket getTicketTypeById(int id);
+    TicketType getTicketTypeById(int id);
 
-    Transaction createTransaction(TicketOrder ticketOrder);
-
-    Transaction saveTransaction(Transaction transaction);
+    DbTransaction createTransaction(TicketOrder ticketOrder);
 
     String createClientToken();
+
+    boolean doTransaction(String nonce, int transactionId);
 }

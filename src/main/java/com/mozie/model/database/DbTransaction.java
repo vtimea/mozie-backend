@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class DbTransaction {
     @Id
     @Column(name = "id")
     @NonNull
@@ -32,14 +32,13 @@ public class Transaction {
     @Column(name = "successful")
     private boolean successful;
 
-    @Column(columnDefinition = "ENUM('CREATED','NONCERECEIVED','COMPLETED')")
+    @Column(columnDefinition = "ENUM('CREATED','COMPLETED')")
     @Enumerated(EnumType.STRING)
     private Status status;
 
     public enum Status {
         CREATED,
-        NONCERECEIVED,
-        COMPLETED;
+        COMPLETED
     }
 
     public int getId() {
