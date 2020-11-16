@@ -1,4 +1,4 @@
-package com.mozie.service;
+package com.mozie.service.movie;
 
 import com.mozie.model.database.Movie;
 

@@ -1,4 +1,4 @@
-package com.mozie.service;
+package com.mozie.service.cinema;
 
 import com.mozie.model.database.Cinema;
 import com.mozie.model.database.Screening;

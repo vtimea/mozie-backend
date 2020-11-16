@@ -1,5 +1,6 @@
-package com.mozie.service;
+package com.mozie.service.ticket;
 
+import com.mozie.model.api.tickets.TicketOrder;
 import com.mozie.model.database.Ticket;
 import com.mozie.model.database.Transaction;
 
@@ -12,5 +13,9 @@ public interface TicketService {
 
     Ticket getTicketTypeById(int id);
 
-    Transaction createTransaction(Transaction transaction);
+    Transaction createTransaction(TicketOrder ticketOrder);
+
+    Transaction saveTransaction(Transaction transaction);
+
+    String createClientToken();
 }

@@ -7,7 +7,7 @@ import com.mozie.model.dto.ScheduleDto;
 import com.mozie.model.dto.ScreeningDto;
 import com.mozie.model.dto.ScreeningRoomDto;
 import com.mozie.model.dto.utils.DtoConverters;
-import com.mozie.service.CinemaService;
+import com.mozie.service.cinema.CinemaService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

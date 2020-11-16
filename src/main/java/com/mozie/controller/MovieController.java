@@ -3,8 +3,7 @@ package com.mozie.controller;
 import com.mozie.model.api.movies.ResponseMovies;
 import com.mozie.model.database.Movie;
 import com.mozie.model.dto.MovieDetailDto;
-import com.mozie.service.MovieService;
-import org.modelmapper.ModelMapper;
+import com.mozie.service.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,6 @@ import static com.mozie.model.dto.utils.DtoConverters.convertToMovieDetailDto;
 public class MovieController {
     @Autowired
     MovieService movieService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("")
     public ResponseEntity<ResponseMovies> getAllMovies() {
