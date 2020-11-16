@@ -2,7 +2,7 @@ package com.mozie.security;
 
 import com.mozie.model.database.User;
 import com.mozie.repository.UserRepository;
-import com.mozie.utils.AuthToken;
+import com.mozie.service.user.AuthToken;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;

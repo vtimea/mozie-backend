@@ -1,4 +1,4 @@
-package com.mozie.utils;
+package com.mozie.service.user;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
