@@ -70,14 +70,14 @@ public class TicketServiceImpl implements TicketService {
         transaction.setStatus(DbTransaction.Status.CREATED);
         LocalDateTime currentTime = LocalDateTime.now();
         transaction.setCreatedAt(currentTime);
-        transaction.setCreatedAt(currentTime);
+        transaction.setUpdatedAt(currentTime);
 
         List<Integer> ticketTypes = ticketOrder.getTicketTypes();
         List<Integer> seats = ticketOrder.getSeats();
         if (ticketTypes.size() != seats.size()) {
             // todo error invalid tickets types and seats
         }
-        transaction = transactionRepository.save(transaction);
+        transaction = transactionRepository.saveAndFlush(transaction);
         createTickets(ticketOrder.getUserId(), ticketTypes, seats, transaction);
         return transaction;
     }
@@ -151,7 +151,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void setTicketPurchaseDate(int transactionId, LocalDateTime purchaseDate) {
-        List<UserTicket> userTickets = userTicketRepository.getByTransactionId(transactionId);
+        DbTransaction transaction = transactionRepository.getById(transactionId);
+        List<UserTicket> userTickets = userTicketRepository.getByTransactionId(transaction);
         for (UserTicket userTicket : userTickets) {
             userTicket.setPurchasedOn(purchaseDate);
         }
@@ -159,7 +160,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void deleteTickets(int transactionId) {
-        List<UserTicket> userTickets = userTicketRepository.getByTransactionId(transactionId);
+        DbTransaction transaction = transactionRepository.getById(transactionId);
+        List<UserTicket> userTickets = userTicketRepository.getByTransactionId(transaction);
         for (UserTicket userTicket : userTickets) {
             Seat seat = userTicket.getSeat();
             seat.setAvailable(true);

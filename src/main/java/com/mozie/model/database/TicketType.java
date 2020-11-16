@@ -13,7 +13,7 @@ public class TicketType {
     @Id
     @Column(name = "id")
     @NonNull
-    private String id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -28,11 +28,11 @@ public class TicketType {
     }
 
     @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NonNull int id) {
         this.id = id;
     }
 

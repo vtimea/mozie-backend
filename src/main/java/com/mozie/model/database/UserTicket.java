@@ -2,7 +2,6 @@ package com.mozie.model.database;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -11,7 +10,7 @@ import javax.persistence.*;
 public class UserTicket {
     @Id
     @Column(name = "id")
-    @NonNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @OneToOne
@@ -32,7 +31,7 @@ public class UserTicket {
 
     @OneToOne
     @JoinColumn(name = "transaction_id", nullable = false)
-    private DbTransaction dbTransaction;
+    private DbTransaction transactionId;
 
     public int getId() {
         return id;
@@ -75,10 +74,10 @@ public class UserTicket {
     }
 
     public DbTransaction getTransaction() {
-        return dbTransaction;
+        return transactionId;
     }
 
     public void setTransaction(DbTransaction dbTransaction) {
-        this.dbTransaction = dbTransaction;
+        this.transactionId = dbTransaction;
     }
 }

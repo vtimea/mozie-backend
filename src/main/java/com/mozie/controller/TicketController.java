@@ -35,7 +35,7 @@ public class TicketController {
         return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
     }
 
-    @PostMapping("payments/ticket")
+    @PostMapping("payment")
     public ResponseEntity<ResponseClientToken> generateClientToken(@RequestBody TicketOrder ticketOrder) {
         DbTransaction dbTransaction = ticketService.createTransaction(ticketOrder);
         String clientToken = ticketService.createClientToken();
@@ -45,7 +45,7 @@ public class TicketController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("payments/ticket/nonce")
+    @PostMapping("payment/nonce")
     public ResponseEntity<Boolean> receivePaymentNonce(@RequestBody PaymentResult paymentResult) {
         boolean isSuccessful = ticketService.doTransaction(paymentResult.getNonce(), paymentResult.getTransactionId());
         //todo
