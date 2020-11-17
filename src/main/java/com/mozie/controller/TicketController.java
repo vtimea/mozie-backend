@@ -8,6 +8,7 @@ import com.mozie.model.database.TicketType;
 import com.mozie.model.dto.TicketDto;
 import com.mozie.model.dto.utils.DtoConverters;
 import com.mozie.service.ticket.TicketService;
+import com.mozie.utils.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,13 @@ public class TicketController {
     }
 
     @PostMapping("payment")
-    public ResponseEntity<ResponseClientToken> generateClientToken(@RequestBody TicketOrder ticketOrder) {
-        DbTransaction dbTransaction = ticketService.createTransaction(ticketOrder);
+    public ResponseEntity generateClientToken(@RequestBody TicketOrder ticketOrder) {
+        DbTransaction dbTransaction;
+        try {
+            dbTransaction = ticketService.createTransaction(ticketOrder);
+        } catch (ErrorResponse e) {
+            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.BAD_REQUEST);
+        }
         String clientToken = ticketService.createClientToken();
         ResponseClientToken response = new ResponseClientToken();
         response.setTransactionId(dbTransaction.getId());

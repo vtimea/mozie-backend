@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.mozie.utils.ApiKeys.*;
+import static com.mozie.utils.ErrorResponses.*;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -55,16 +56,16 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public DbTransaction createTransaction(TicketOrder ticketOrder) {
         DbTransaction transaction = new DbTransaction();
-        User user = userRepository.findUserByUserId(ticketOrder.getUserId());   // todo user not found error
+        User user = userRepository.findUserByUserId(ticketOrder.getUserId());
         if (user == null) {
-            return null; //todo error no such user
+            throw NO_SUCH_USER(ticketOrder.getUserId());
         }
         transaction.setUser(user);
         boolean isAmountValid = checkSumAmount(ticketOrder.getTicketTypes(), ticketOrder.getSumAmount());
         if (isAmountValid) {
             transaction.setAmount(ticketOrder.getSumAmount());
         } else {
-            // todo invalid amount and ticket types error
+            throw INVALID_AMOUNT_TICKET;
         }
         transaction.setSuccessful(false);
         transaction.setStatus(DbTransaction.Status.CREATED);
@@ -75,7 +76,7 @@ public class TicketServiceImpl implements TicketService {
         List<Integer> ticketTypes = ticketOrder.getTicketTypes();
         List<Integer> seats = ticketOrder.getSeats();
         if (ticketTypes.size() != seats.size()) {
-            // todo error invalid tickets types and seats
+            throw INVALID_TICKET_OR_SEATS;
         }
         transaction = transactionRepository.saveAndFlush(transaction);
         createTickets(ticketOrder.getUserId(), ticketTypes, seats, transaction);
@@ -123,30 +124,37 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void createTickets(String userId, List<Integer> ticketTypes, List<Integer> seats, DbTransaction dbTransaction) {
-        for (int ticketTypeId : ticketTypes) {
-            for (int seatId : seats) {
-                UserTicket userTicket = new UserTicket();
+        for (int i = 0; i < ticketTypes.size(); ++i) {
+            UserTicket userTicket = new UserTicket();
 
-                // Reserve seats
-                Seat seat = seatsRepository.findById(seatId);
-                if (!seat.getAvailable()) {
-                    // todo error
-                }
-                seat.setAvailable(false);
-                seat = seatsRepository.save(seat);
-                userTicket.setSeat(seat);   // todo error
-
-                //  Set ticket type
-                TicketType ticketType = ticketTypeRepository.getById(ticketTypeId);
-                userTicket.setTicketType(ticketType);   // todo error
-
-                //  Set user and transaction
-                User user = userRepository.findUserByUserId(userId);
-                userTicket.setUser(user);   // todo error
-                userTicket.setTransaction(dbTransaction);
-
-                userTicketRepository.save(userTicket);
+            // Reserve seats
+            Seat seat = seatsRepository.findById((int) seats.get(i));
+            if (seat == null) {
+                throw NO_SUCH_SEAT(seats.get(i));
             }
+            if (!seat.getAvailable()) {
+                throw SEAT_UNAVAILABLE(seat.getId());
+            }
+            seat.setAvailable(false);
+            seat = seatsRepository.save(seat);
+            userTicket.setSeat(seat);
+
+            //  Set ticket type
+            TicketType ticketType = ticketTypeRepository.getById(ticketTypes.get(i));
+            if (ticketType == null) {
+                throw NO_SUCH_TICKET_TYPE(ticketTypes.get(i));
+            }
+            userTicket.setTicketType(ticketType);
+
+            //  Set user and transaction
+            User user = userRepository.findUserByUserId(userId);
+            if (user == null) {
+                throw NO_SUCH_USER(userId);
+            }
+            userTicket.setUser(user);
+            userTicket.setTransaction(dbTransaction);
+
+            userTicketRepository.save(userTicket);
         }
     }
 

@@ -1,10 +1,24 @@
 package com.mozie.utils;
 
-import com.mozie.model.api.ErrorMessage;
-
 public class ErrorResponses {
-    public static ErrorMessage ERROR_INVALID_FB_TOKEN = new ErrorMessage(1, "Invalid facebook token");
-    public static ErrorMessage ERROR_CANNOT_CREATE_USER = new ErrorMessage(2, "User couldn't be created.");
-    public static ErrorMessage ERROR_INVALID_DATE_OR_CINEMA = new ErrorMessage(3, "Invalid date or cinema.");
-    public static ErrorMessage ERROR_MOVIEID_NULL = new ErrorMessage(4, "Invalid movieId");
+    public static ErrorResponse NO_SUCH_USER(String userId) {
+        return new ErrorResponse(10, "User (" + userId + ") doesn't exist.");
+    }
+
+    public static ErrorResponse NO_SUCH_TICKET_TYPE(int ticketType) {
+        return new ErrorResponse(11, "Ticket type (" + ticketType + ") doesn't exist.");
+    }
+
+    public static ErrorResponse NO_SUCH_SEAT(int seatId) {
+        return new ErrorResponse(12, "Seat (" + seatId + ") doesn't exist.");
+    }
+
+    public static ErrorResponse INVALID_AMOUNT_TICKET = new ErrorResponse(13, "Invalid amount or ticket types");
+
+    public static ErrorResponse INVALID_TICKET_OR_SEATS = new ErrorResponse(14, "Invalid ticket types and seats.");
+
+    public static ErrorResponse SEAT_UNAVAILABLE(int seatId) {
+        return new ErrorResponse(15, "Seat(" + seatId + ") not available.");
+    }
 }
+
