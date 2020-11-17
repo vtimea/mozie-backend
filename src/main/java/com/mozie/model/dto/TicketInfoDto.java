@@ -1,6 +1,6 @@
 package com.mozie.model.dto;
 
-public class UserTicketInfoDto {
+public class TicketInfoDto {
     private int ticketId;
     private String type;
     private int price;

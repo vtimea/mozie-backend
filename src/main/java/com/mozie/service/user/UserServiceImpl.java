@@ -3,8 +3,8 @@ package com.mozie.service.user;
 import com.mozie.model.api.login.FbToken;
 import com.mozie.model.api.login.FbTokenData;
 import com.mozie.model.database.*;
+import com.mozie.model.dto.TicketInfoDto;
 import com.mozie.model.dto.UserTicketDto;
-import com.mozie.model.dto.UserTicketInfoDto;
 import com.mozie.repository.UserRepository;
 import com.mozie.repository.UserTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,15 +107,15 @@ public class UserServiceImpl implements UserService {
             dto.setScreeningType(screening.getType());
             dto.setCinemaName(screening.getCinema().getName());
 
-            List<UserTicketInfoDto> infoDtos = new ArrayList<>();
+            List<TicketInfoDto> infoDtos = new ArrayList<>();
             for (UserTicket ticket : tickets) {
-                UserTicketInfoDto userTicketInfoDto = new UserTicketInfoDto();
-                userTicketInfoDto.setTicketId(ticket.getId());
-                userTicketInfoDto.setType(ticket.getTicketType().getName());
-                userTicketInfoDto.setPrice(ticket.getTicketType().getPrice());
-                userTicketInfoDto.setCol(ticket.getSeat().getCol());
-                userTicketInfoDto.setRow(ticket.getSeat().getRow());
-                infoDtos.add(userTicketInfoDto);
+                TicketInfoDto ticketInfoDto = new TicketInfoDto();
+                ticketInfoDto.setTicketId(ticket.getId());
+                ticketInfoDto.setType(ticket.getTicketType().getName());
+                ticketInfoDto.setPrice(ticket.getTicketType().getPrice());
+                ticketInfoDto.setCol(ticket.getSeat().getCol());
+                ticketInfoDto.setRow(ticket.getSeat().getRow());
+                infoDtos.add(ticketInfoDto);
             }
             dto.setTickets(infoDtos);
             result.put(key, dto);

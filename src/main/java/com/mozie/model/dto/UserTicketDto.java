@@ -8,7 +8,7 @@ public class UserTicketDto {
     private String moviePosterUrl;
     private String screeningType;
     private String cinemaName;
-    private List<UserTicketInfoDto> tickets;
+    private List<TicketInfoDto> tickets;
 
     public String getMovieTitle() {
         return movieTitle;
@@ -50,11 +50,11 @@ public class UserTicketDto {
         this.cinemaName = cinemaName;
     }
 
-    public List<UserTicketInfoDto> getTickets() {
+    public List<TicketInfoDto> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<UserTicketInfoDto> tickets) {
+    public void setTickets(List<TicketInfoDto> tickets) {
         this.tickets = tickets;
     }
 }
