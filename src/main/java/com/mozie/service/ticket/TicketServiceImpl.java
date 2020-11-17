@@ -64,11 +64,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public DbTransaction createTransaction(TicketOrder ticketOrder) {
+    public DbTransaction createTransaction(String userToken, TicketOrder ticketOrder) {
         DbTransaction transaction = new DbTransaction();
-        User user = userRepository.findUserByUserId(ticketOrder.getUserId());
+        User user = userRepository.findUserByToken(userToken);
         if (user == null) {
-            throw NO_SUCH_USER(ticketOrder.getUserId());
+            throw NO_SUCH_USER(userToken);
         }
         transaction.setUser(user);
         boolean isAmountValid = checkSumAmount(ticketOrder.getTicketTypes(), ticketOrder.getSumAmount());
@@ -90,7 +90,7 @@ public class TicketServiceImpl implements TicketService {
         }
         transaction = transactionRepository.saveAndFlush(transaction);
         scheduleTransactionCheck(currentTime, transaction.getId());
-        createTickets(ticketOrder.getUserId(), ticketTypes, seats, transaction);
+        createTickets(user.getUserId(), ticketTypes, seats, transaction);
         return transaction;
     }
 

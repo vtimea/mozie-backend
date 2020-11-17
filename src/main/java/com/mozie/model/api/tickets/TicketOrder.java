@@ -3,18 +3,9 @@ package com.mozie.model.api.tickets;
 import java.util.List;
 
 public class TicketOrder {
-    private String userId;
     private List<Integer> ticketTypes;
     private List<Integer> seats;
     private int sumAmount;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public List<Integer> getTicketTypes() {
         return ticketTypes;

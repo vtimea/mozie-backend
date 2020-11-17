@@ -37,10 +37,10 @@ public class TicketController {
     }
 
     @PostMapping("payment")
-    public ResponseEntity generateClientToken(@RequestBody TicketOrder ticketOrder) {
+    public ResponseEntity generateClientToken(@RequestHeader("Authorization") String userToken, @RequestBody TicketOrder ticketOrder) {
         DbTransaction dbTransaction;
         try {
-            dbTransaction = ticketService.createTransaction(ticketOrder);
+            dbTransaction = ticketService.createTransaction(userToken, ticketOrder);
         } catch (ErrorResponse e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.BAD_REQUEST);
         }

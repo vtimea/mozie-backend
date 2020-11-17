@@ -13,7 +13,7 @@ public interface TicketService {
 
     TicketType getTicketTypeById(int id);
 
-    DbTransaction createTransaction(TicketOrder ticketOrder);
+    DbTransaction createTransaction(String userToken, TicketOrder ticketOrder);
 
     String createClientToken();
 
