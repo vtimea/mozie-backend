@@ -5,7 +5,7 @@ import com.mozie.model.api.tickets.ResponseClientToken;
 import com.mozie.model.api.tickets.TicketOrder;
 import com.mozie.model.database.DbTransaction;
 import com.mozie.model.database.TicketType;
-import com.mozie.model.dto.TicketDto;
+import com.mozie.model.dto.TicketTypeDto;
 import com.mozie.model.dto.utils.DtoConverters;
 import com.mozie.service.ticket.TicketService;
 import com.mozie.utils.ErrorResponse;
@@ -25,15 +25,15 @@ public class TicketController {
     TicketService ticketService;
 
     @GetMapping("")
-    public ResponseEntity<List<TicketDto>> getTicketsByPrice(@PathParam(value = "type") String type) {
+    public ResponseEntity<List<TicketTypeDto>> getTicketsByPrice(@PathParam(value = "type") String type) {
         List<TicketType> ticketTypes;
         if (type == null || type.isEmpty()) {
             ticketTypes = ticketService.getAllTicketTypes();
         } else {
             ticketTypes = ticketService.getTicketTypeByType(type);
         }
-        List<TicketDto> ticketDtos = DtoConverters.convertToTicketDtoList(ticketTypes);
-        return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
+        List<TicketTypeDto> ticketTypeDtos = DtoConverters.convertToTicketDtoList(ticketTypes);
+        return new ResponseEntity<>(ticketTypeDtos, HttpStatus.OK);
     }
 
     @PostMapping("payment")

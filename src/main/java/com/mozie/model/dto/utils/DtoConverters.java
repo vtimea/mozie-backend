@@ -82,17 +82,17 @@ public class DtoConverters {
         return movieDtos;
     }
 
-    public static TicketDto convertToTicketDto(TicketType ticketType) {
+    public static TicketTypeDto convertToTicketDto(TicketType ticketType) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(ticketType, TicketDto.class);
+        return modelMapper.map(ticketType, TicketTypeDto.class);
     }
 
-    public static List<TicketDto> convertToTicketDtoList(List<TicketType> ticketTypes) {
-        List<TicketDto> ticketDtos = new ArrayList<>();
+    public static List<TicketTypeDto> convertToTicketDtoList(List<TicketType> ticketTypes) {
+        List<TicketTypeDto> ticketTypeDtos = new ArrayList<>();
         for (TicketType ticketType : ticketTypes) {
-            ticketDtos.add(convertToTicketDto(ticketType));
+            ticketTypeDtos.add(convertToTicketDto(ticketType));
         }
-        return ticketDtos;
+        return ticketTypeDtos;
     }
 
     public static ScreeningRoomDto convertToScreeningRoomDto(List<Seat> seats) {
