@@ -37,7 +37,8 @@ public class DbTransaction {
 
     public enum Status {
         CREATED,
-        COMPLETED
+        COMPLETED,
+        FAILED
     }
 
     public int getId() {

@@ -6,16 +6,24 @@ import com.mozie.model.database.*;
 import com.mozie.repository.*;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static com.mozie.utils.ApiKeys.*;
 import static com.mozie.utils.ErrorResponses.*;
 
 @Service
 public class TicketServiceImpl implements TicketService {
+    private static final int PURCHASE_TIME_LIMIT_MINS = 15;
+
     @Autowired
     UserRepository userRepository;
 
@@ -37,6 +45,8 @@ public class TicketServiceImpl implements TicketService {
             BRAINTREE_PUBLIC_KEY,
             BRAINTREE_PRIVATE_KEY
     );
+
+    private TaskScheduler scheduler;
 
     @Override
     public List<TicketType> getAllTicketTypes() {
@@ -79,6 +89,7 @@ public class TicketServiceImpl implements TicketService {
             throw INVALID_TICKET_OR_SEATS;
         }
         transaction = transactionRepository.saveAndFlush(transaction);
+        scheduleTransactionCheck(currentTime, transaction.getId());
         createTickets(ticketOrder.getUserId(), ticketTypes, seats, transaction);
         return transaction;
     }
@@ -169,6 +180,8 @@ public class TicketServiceImpl implements TicketService {
 
     private void deleteTickets(int transactionId) {
         DbTransaction transaction = transactionRepository.getById(transactionId);
+        transaction.setStatus(DbTransaction.Status.FAILED);
+        transactionRepository.save(transaction);
         List<UserTicket> userTickets = userTicketRepository.getByTransactionId(transaction);
         for (UserTicket userTicket : userTickets) {
             Seat seat = userTicket.getSeat();
@@ -176,5 +189,21 @@ public class TicketServiceImpl implements TicketService {
             seatsRepository.save(seat);
         }
         userTicketRepository.deleteAll(userTickets);
+    }
+
+    @Async
+    public void scheduleTransactionCheck(LocalDateTime createdAt, int transactionId) {
+        if (scheduler == null) {
+            ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
+            scheduler = new ConcurrentTaskScheduler(localExecutor);
+        }
+        scheduler.schedule(() -> checkTransactionStatus(transactionId), new Date(createdAt.toDateTime().plusMinutes(PURCHASE_TIME_LIMIT_MINS).getMillis()));
+    }
+
+    private void checkTransactionStatus(int transactionId) {
+        DbTransaction transaction = transactionRepository.getById(transactionId);
+        if (transaction.getStatus() != DbTransaction.Status.COMPLETED) {
+            deleteTickets(transactionId);
+        }
     }
 }
