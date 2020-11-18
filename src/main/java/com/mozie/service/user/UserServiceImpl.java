@@ -26,7 +26,6 @@ import static com.mozie.utils.ErrorResponses.NO_SUCH_USER;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private static final int TOKEN_VALIDITY = (1000 * 60 * 60);
     private static final int SCREENING_START_LIMIT = 30;
 
     @Autowired
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthToken generateToken(String userId) {
-        return AuthToken.generateToken(userId, TOKEN_VALIDITY);
+        return AuthToken.generateToken(userId);
     }
 
     @Override

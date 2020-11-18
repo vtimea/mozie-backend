@@ -11,6 +11,8 @@ import org.joda.time.LocalDateTime;
 import static com.mozie.utils.ApiKeys.JwtSigningKey;
 
 public class AuthToken {
+    private static final int TOKEN_VALIDITY_DAYS = 90;
+
     private final String jwt;
     private final LocalDateTime createdAt;
     private final LocalDateTime expiresAt;
@@ -21,9 +23,9 @@ public class AuthToken {
         this.expiresAt = expiresAt;
     }
 
-    public static AuthToken generateToken(String userId, int validity) {
+    public static AuthToken generateToken(String userId) {
         LocalDateTime created = LocalDateTime.now();
-        LocalDateTime expires = new LocalDateTime(created.plusMillis(validity));
+        LocalDateTime expires = new LocalDateTime(created.plusDays(TOKEN_VALIDITY_DAYS));
         String jwt = Jwts.builder().setIssuer("Mozie web service")
                 .setSubject(userId)
                 .setExpiration(expires.toDate())
