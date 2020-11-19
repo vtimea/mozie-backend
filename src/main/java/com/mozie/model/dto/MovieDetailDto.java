@@ -1,5 +1,7 @@
 package com.mozie.model.dto;
 
+import com.mozie.model.database.Movie;
+
 import java.util.List;
 
 public class MovieDetailDto {
@@ -10,7 +12,7 @@ public class MovieDetailDto {
     private String description;
     private String posterUrl;
     private List<ActorDto> actorsList;
-    private boolean isActive;
+    private Movie.Status status;
 
     public String getId() {
         return id;
@@ -68,11 +70,11 @@ public class MovieDetailDto {
         this.actorsList = actors;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public Movie.Status getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setStatus(Movie.Status status) {
+        this.status = status;
     }
 }

@@ -5,7 +5,6 @@ import com.mozie.repository.MovieRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,18 +13,13 @@ public class MovieServiceImpl implements MovieService {
     MovieRespository movieRespository;
 
     @Override
-    public List<Movie> getRecommendedMovies(String userId) {
-        return new ArrayList<>();
-    }
-
-    @Override
     public List<Movie> getSoonMovies() {
-        return movieRespository.findMoviesByIsActiveFalse();
+        return movieRespository.findByStatus(Movie.Status.UNRELEASED);
     }
 
     @Override
     public List<Movie> getNowPlayingMovies() {
-        return movieRespository.findMoviesByIsActiveTrue();
+        return movieRespository.findByStatus(Movie.Status.RELEASED);
     }
 
     @Override

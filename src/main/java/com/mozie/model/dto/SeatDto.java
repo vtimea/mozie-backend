@@ -4,6 +4,7 @@ public class SeatDto {
     private int id;
     private int row;
     private int col;
+    private int room;
     private boolean available;
 
     public int getId() {
@@ -28,6 +29,14 @@ public class SeatDto {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
     }
 
     public boolean isAvailable() {

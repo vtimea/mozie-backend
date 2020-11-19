@@ -25,6 +25,9 @@ public class Seat {
     @JoinColumn(name = "screening_id", nullable = false)
     private Screening screening;
 
+    @Column(name = "room")
+    private int room;
+
     public int getId() {
         return id;
     }
@@ -63,5 +66,13 @@ public class Seat {
 
     public void setScreening(Screening screening) {
         this.screening = screening;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
     }
 }

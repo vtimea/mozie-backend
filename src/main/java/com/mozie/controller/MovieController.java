@@ -23,10 +23,9 @@ public class MovieController {
 
     @GetMapping("")
     public ResponseEntity<ResponseMovies> getAllMovies() {
-        List<Movie> recommended = movieService.getRecommendedMovies(""); // todo
         List<Movie> now = movieService.getNowPlayingMovies();
         List<Movie> soon = movieService.getSoonMovies();
-        ResponseMovies responseMovies = new ResponseMovies(convertToFeaturedMovieDto(recommended), convertToFeaturedMovieDto(now), convertToFeaturedMovieDto(soon));
+        ResponseMovies responseMovies = new ResponseMovies(convertToFeaturedMovieDto(now), convertToFeaturedMovieDto(soon));
         return new ResponseEntity<>(responseMovies, HttpStatus.OK);
     }
 

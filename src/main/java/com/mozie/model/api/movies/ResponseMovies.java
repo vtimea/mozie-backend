@@ -7,25 +7,15 @@ import java.util.List;
 
 
 public class ResponseMovies {
-    private List<FeaturedMovieDto> recommended = new ArrayList<>();
     private List<FeaturedMovieDto> now = new ArrayList<>();
     private List<FeaturedMovieDto> soon = new ArrayList<>();
 
     public ResponseMovies() {
     }
 
-    public ResponseMovies(List<FeaturedMovieDto> recommended, List<FeaturedMovieDto> now, List<FeaturedMovieDto> soon) {
-        this.recommended = recommended;
+    public ResponseMovies(List<FeaturedMovieDto> now, List<FeaturedMovieDto> soon) {
         this.now = now;
         this.soon = soon;
-    }
-
-    public List<FeaturedMovieDto> getRecommended() {
-        return recommended;
-    }
-
-    public void setRecommended(List<FeaturedMovieDto> recommended) {
-        this.recommended = recommended;
     }
 
     public List<FeaturedMovieDto> getNow() {

@@ -6,6 +6,7 @@ public class TicketInfoDto {
     private int price;
     private int col;
     private int row;
+    private int room;
 
     public int getTicketId() {
         return ticketId;
@@ -46,4 +47,13 @@ public class TicketInfoDto {
     public void setRow(int row) {
         this.row = row;
     }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
 }
+

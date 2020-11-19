@@ -2,10 +2,7 @@ package com.mozie.model.database;
 
 import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "movies")
@@ -33,9 +30,9 @@ public class Movie {
     @Column(name = "poster_url")
     private String posterUrl;
 
-    @NonNull
-    @Column(name = "is_active")
-    private boolean isActive;
+    @Column(columnDefinition = "ENUM('UNRELEASED','RELEASED','ARCHIVED')")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @NonNull
     public String getId() {
@@ -94,11 +91,17 @@ public class Movie {
         this.posterUrl = posterUrl;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public enum Status {
+        UNRELEASED,
+        RELEASED,
+        ARCHIVED
     }
 }

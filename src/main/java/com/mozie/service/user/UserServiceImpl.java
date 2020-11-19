@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
                 ticketInfoDto.setPrice(ticket.getTicketType().getPrice());
                 ticketInfoDto.setCol(ticket.getSeat().getCol());
                 ticketInfoDto.setRow(ticket.getSeat().getRow());
+                ticketInfoDto.setRoom(ticket.getSeat().getRoom());
                 infoDtos.add(ticketInfoDto);
             }
             dto.setTickets(infoDtos);
