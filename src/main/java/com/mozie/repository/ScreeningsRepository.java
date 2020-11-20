@@ -1,9 +1,9 @@
 package com.mozie.repository;
 
 import com.mozie.model.database.Screening;
-import org.joda.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScreeningsRepository extends JpaRepository<Screening, Integer> {

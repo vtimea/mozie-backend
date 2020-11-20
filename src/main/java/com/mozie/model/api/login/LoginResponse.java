@@ -1,6 +1,7 @@
 package com.mozie.model.api.login;
 
-import org.joda.time.LocalDateTime;
+
+import java.time.LocalDateTime;
 
 public class LoginResponse {
     private String token;

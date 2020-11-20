@@ -8,7 +8,6 @@ import com.mozie.model.dto.ScreeningDto;
 import com.mozie.model.dto.ScreeningRoomDto;
 import com.mozie.model.dto.utils.DtoConverters;
 import com.mozie.service.cinema.CinemaService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.mozie.model.dto.utils.DtoConverters.convertToScheduleScreeningDto;
@@ -27,6 +29,8 @@ import static com.mozie.model.dto.utils.DtoConverters.convertToScreeningDto;
 @RestController
 @RequestMapping("/api")
 public class CinemaController {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     @Autowired
     CinemaService cinemaService;
 
@@ -42,7 +46,7 @@ public class CinemaController {
         if (cinema == null || date == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        DateTime dateTime = new DateTime(date);
+        LocalDateTime dateTime = ZonedDateTime.parse(date).toLocalDateTime();
         screenings = cinemaService.getScreeningsByCinemaAndDate(cinema, dateTime);
         List<ScheduleDto> screeningDtos = convertToScheduleScreeningDto(screenings);
         return new ResponseEntity<>(screeningDtos, HttpStatus.OK);

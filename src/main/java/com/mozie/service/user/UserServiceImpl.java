@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
         userTickets.removeIf(userTicket -> {
             Seat seat = userTicket.getSeat();
             Screening screening = seat.getScreening();
-            return screening.getStartTime().toDateTime().plusMinutes(SCREENING_START_LIMIT).isBeforeNow();
+            return screening.getStartTime().plusMinutes(SCREENING_START_LIMIT).isBefore(LocalDateTime.now());
         });
         return userTickets;
     }

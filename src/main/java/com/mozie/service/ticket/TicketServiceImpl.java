@@ -4,7 +4,6 @@ import com.braintreegateway.*;
 import com.mozie.model.api.tickets.TicketOrder;
 import com.mozie.model.database.*;
 import com.mozie.repository.*;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
@@ -12,6 +11,8 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -197,7 +198,7 @@ public class TicketServiceImpl implements TicketService {
             ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
             scheduler = new ConcurrentTaskScheduler(localExecutor);
         }
-        scheduler.schedule(() -> checkTransactionStatus(transactionId), new Date(createdAt.toDateTime().plusMinutes(PURCHASE_TIME_LIMIT_MINS).getMillis()));
+        scheduler.schedule(() -> checkTransactionStatus(transactionId), new Date(createdAt.plusMinutes(PURCHASE_TIME_LIMIT_MINS).toEpochSecond(ZoneOffset.UTC)));
     }
 
     private void checkTransactionStatus(int transactionId) {

@@ -1,11 +1,10 @@
 package com.mozie.model.database;
 
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "screenings")
 public class Screening {
@@ -24,7 +23,6 @@ public class Screening {
     private Cinema cinema;
 
     @Column(name = "startDate")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime startTime;
 
     @Column(name = "type")

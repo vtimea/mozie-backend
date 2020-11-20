@@ -5,8 +5,11 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 import static com.mozie.utils.ApiKeys.JwtSigningKey;
 
@@ -25,10 +28,10 @@ public class AuthToken {
 
     public static AuthToken generateToken(String userId) {
         LocalDateTime created = LocalDateTime.now();
-        LocalDateTime expires = new LocalDateTime(created.plusDays(TOKEN_VALIDITY_DAYS));
+        LocalDateTime expires = created.plusDays(TOKEN_VALIDITY_DAYS);
         String jwt = Jwts.builder().setIssuer("Mozie web service")
                 .setSubject(userId)
-                .setExpiration(expires.toDate())
+                .setExpiration(new Date(expires.toEpochSecond(ZoneOffset.UTC)))
                 .signWith(Keys.hmacShaKeyFor(JwtSigningKey))
                 .compact();
         return new AuthToken(jwt, created, expires);
@@ -50,8 +53,8 @@ public class AuthToken {
         } catch (JwtException e) {
             return true;
         }
-        DateTime exp = new DateTime(claims.getBody().getExpiration());
-        return exp.isBeforeNow();
+        LocalDateTime exp = LocalDateTime.ofInstant(claims.getBody().getExpiration().toInstant(), ZoneId.systemDefault());
+        return exp.isBefore(LocalDateTime.now());
     }
 
     public static String getUserId(String jwt) {

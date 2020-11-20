@@ -1,9 +1,7 @@
 package com.mozie.model.database;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
@@ -21,11 +19,9 @@ public class DbTransaction {
     private int amount;
 
     @Column(name = "created_at")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime updatedAt;
 
     @Column(name = "successful")

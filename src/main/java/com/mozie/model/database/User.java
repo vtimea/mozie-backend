@@ -1,13 +1,12 @@
 package com.mozie.model.database;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +20,6 @@ public class User {
     private String token;
 
     @Column(name = "expires")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime expires;
 
     public User() {
