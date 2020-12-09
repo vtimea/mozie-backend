@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface MovieRespository extends JpaRepository<Movie, String> {
+public interface MovieRepository extends JpaRepository<Movie, String> {
     List<Movie> findByStatus(Movie.Status status);
 
     Movie findMovieById(String id);

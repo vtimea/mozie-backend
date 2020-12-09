@@ -78,7 +78,6 @@ public class TicketServiceImpl implements TicketService {
         } else {
             throw INVALID_AMOUNT_TICKET;
         }
-        transaction.setSuccessful(false);
         transaction.setStatus(DbTransaction.Status.CREATED);
         LocalDateTime currentTime = LocalDateTime.now();
         transaction.setCreatedAt(currentTime);
@@ -111,8 +110,11 @@ public class TicketServiceImpl implements TicketService {
                 .done();
         Result<Transaction> result = gateway.transaction().sale(request);
         LocalDateTime purchaseDate = LocalDateTime.now();
-        transaction.setSuccessful(result.isSuccess());
-        transaction.setStatus(DbTransaction.Status.COMPLETED);
+        if (result.isSuccess()) {
+            transaction.setStatus(DbTransaction.Status.COMPLETED);
+        } else {
+            transaction.setStatus(DbTransaction.Status.FAILED);
+        }
         transaction.setUpdatedAt(purchaseDate);
         if (result.isSuccess()) {
             setTicketPurchaseDate(transactionId, purchaseDate);

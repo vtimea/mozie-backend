@@ -24,10 +24,7 @@ public class DbTransaction {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "successful")
-    private boolean successful;
-
-    @Column(columnDefinition = "ENUM('CREATED','COMPLETED')")
+    @Column(columnDefinition = "ENUM('CREATED','COMPLETED','FAILED')")
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -75,14 +72,6 @@ public class DbTransaction {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public boolean isSuccessful() {
-        return successful;
-    }
-
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
     }
 
     public Status getStatus() {

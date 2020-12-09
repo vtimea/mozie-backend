@@ -31,7 +31,7 @@ public class AuthToken {
         LocalDateTime expires = created.plusDays(TOKEN_VALIDITY_DAYS);
         String jwt = Jwts.builder().setIssuer("Mozie web service")
                 .setSubject(userId)
-                .setExpiration(new Date(expires.toEpochSecond(ZoneOffset.UTC)))
+                .setExpiration(Date.from(expires.toInstant(ZoneOffset.UTC)))
                 .signWith(Keys.hmacShaKeyFor(JwtSigningKey))
                 .compact();
         return new AuthToken(jwt, created, expires);

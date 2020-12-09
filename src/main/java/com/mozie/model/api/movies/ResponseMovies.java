@@ -7,30 +7,30 @@ import java.util.List;
 
 
 public class ResponseMovies {
-    private List<FeaturedMovieDto> now = new ArrayList<>();
-    private List<FeaturedMovieDto> soon = new ArrayList<>();
+    private List<FeaturedMovieDto> released = new ArrayList<>();
+    private List<FeaturedMovieDto> unreleased = new ArrayList<>();
 
     public ResponseMovies() {
     }
 
-    public ResponseMovies(List<FeaturedMovieDto> now, List<FeaturedMovieDto> soon) {
-        this.now = now;
-        this.soon = soon;
+    public ResponseMovies(List<FeaturedMovieDto> released, List<FeaturedMovieDto> unreleased) {
+        this.released = released;
+        this.unreleased = unreleased;
     }
 
-    public List<FeaturedMovieDto> getNow() {
-        return now;
+    public List<FeaturedMovieDto> getReleased() {
+        return released;
     }
 
-    public void setNow(List<FeaturedMovieDto> now) {
-        this.now = now;
+    public void setReleased(List<FeaturedMovieDto> released) {
+        this.released = released;
     }
 
-    public List<FeaturedMovieDto> getSoon() {
-        return soon;
+    public List<FeaturedMovieDto> getUnreleased() {
+        return unreleased;
     }
 
-    public void setSoon(List<FeaturedMovieDto> soon) {
-        this.soon = soon;
+    public void setUnreleased(List<FeaturedMovieDto> unreleased) {
+        this.unreleased = unreleased;
     }
 }

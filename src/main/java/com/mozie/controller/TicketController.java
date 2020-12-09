@@ -54,7 +54,6 @@ public class TicketController {
     @PostMapping("payment/nonce")
     public ResponseEntity<Boolean> receivePaymentNonce(@RequestBody PaymentResult paymentResult) {
         boolean isSuccessful = ticketService.doTransaction(paymentResult.getNonce(), paymentResult.getTransactionId());
-        //todo
         return new ResponseEntity<>(isSuccessful, HttpStatus.OK);
     }
 }
