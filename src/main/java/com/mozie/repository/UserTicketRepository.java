@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserTicketRepository extends JpaRepository<UserTicket, Integer> {
-    UserTicket getById(int id);
-
     List<UserTicket> getByTransactionId(DbTransaction transactionId);
 
     List<UserTicket> getByUser(User user);

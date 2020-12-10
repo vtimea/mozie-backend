@@ -58,11 +58,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userId) {
-        return userRepository.findUserByUserId(userId);
-    }
-
-    @Override
     public void saveUser(String userId, AuthToken authToken) {
         userRepository.save(new User(userId, authToken.getJwt(), authToken.getExpiresAt()));
     }
