@@ -129,7 +129,6 @@ public class TicketServiceImpl implements TicketService {
         for (Integer ticketId : ticketTypes) {
             TicketType ticketType = getTicketTypeById(ticketId);
             if (ticketType == null) {
-                // todo throw invalid ticket type error
                 return false;
             }
             calculatedAmount += ticketType.getPrice();
