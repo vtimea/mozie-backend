@@ -29,11 +29,6 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public List<Screening> getScreeningsByCinema(String id) {
-        return screeningsRepository.findScreeningsByCinema_Id(id);
-    }
-
-    @Override
     public List<Screening> getScreeningsByCinemaAndDate(String id, LocalDateTime date) {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime startDate;

@@ -10,8 +10,6 @@ import java.util.List;
 public interface CinemaService {
     List<Cinema> getAllCinemas();
 
-    List<Screening> getScreeningsByCinema(String id);
-
     List<Screening> getScreeningsByCinemaAndDate(String id, LocalDateTime date);
 
     List<Screening> getScreeningsByMovie(String movieId);
